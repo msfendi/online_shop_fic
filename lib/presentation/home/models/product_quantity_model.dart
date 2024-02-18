@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:online_shop_fic/data/models/responses/product_response_model.dart';
 
 class ProductQuantityModel {
-  final Product product;
-  final int quantity;
+  Product product;
+  int quantity;
 
   ProductQuantityModel(
     this.product,

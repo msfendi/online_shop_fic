@@ -10,7 +10,6 @@ import '../../../core/router/app_router.dart';
 import '../../home/bloc/checkout/checkout_bloc.dart';
 import '../../home/models/product_model.dart';
 import '../../home/models/store_model.dart';
-import '../models/cart_model.dart';
 import '../widgets/cart_tile.dart';
 
 class CartPage extends StatelessWidget {
@@ -94,34 +93,30 @@ class CartPage extends StatelessWidget {
               );
             },
           ),
-
-          // IconButton(
-          //   onPressed: () {
-          //     context.goNamed(
-          //       RouteConstants.cart,
-          //       pathParameters: PathParameters(
-          //         rootTab: RootTab.order,
-          //       ).toMap(),
-          //     );
-          //   },
-          //   icon: Assets.icons.cart.svg(height: 24.0),
-          // ),
+          const SizedBox(width: 16)
         ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: [
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: carts.length,
-            itemBuilder: (context, index) => CartTile(
-              data: CartModel(
-                product: carts[index],
-                quantity: 1,
-              ),
-            ),
-            separatorBuilder: (context, index) => const SpaceHeight(16.0),
+          BlocBuilder<CheckoutBloc, CheckoutState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () => SizedBox.shrink(),
+                loaded: (checkout) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: checkout.length > 0 ? checkout.length : 0,
+                    itemBuilder: (context, index) => CartTile(
+                      data: checkout[index],
+                    ),
+                    separatorBuilder: (context, index) =>
+                        const SpaceHeight(16.0),
+                  );
+                },
+              );
+            },
           ),
           const SpaceHeight(50.0),
           Row(
@@ -134,26 +129,51 @@ class CartPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
-                350000.currencyFormatRp,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+              BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  final total = state.maybeWhen(
+                    orElse: () => 0,
+                    loaded: (cart) {
+                      return cart.fold<int>(0, (prev, element) {
+                        return prev +
+                            (element.product.price! * element.quantity);
+                      });
+                    },
+                  );
+                  return Text(
+                    total.currencyFormatRp,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  );
+                },
               ),
             ],
           ),
           const SpaceHeight(40.0),
-          Button.filled(
-            onPressed: () {
-              context.goNamed(
-                RouteConstants.address,
-                pathParameters: PathParameters(
-                  rootTab: RootTab.order,
-                ).toMap(),
+          BlocBuilder<CheckoutBloc, CheckoutState>(
+            builder: (context, state) {
+              final totalItemCart = state.maybeWhen(
+                orElse: () => 0,
+                loaded: (cart) {
+                  return cart.fold<int>(0, (prev, element) {
+                    return prev + element.quantity;
+                  });
+                },
+              );
+              return Button.filled(
+                onPressed: () {
+                  context.goNamed(
+                    RouteConstants.address,
+                    pathParameters: PathParameters(
+                      rootTab: RootTab.order,
+                    ).toMap(),
+                  );
+                },
+                label: 'Checkout (${totalItemCart.toString()})',
               );
             },
-            label: 'Checkout (${carts.length})',
           ),
         ],
       ),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:online_shop_fic/presentation/home/models/product_quantity_model.dart';
 
 import '../../../core/components/spaces.dart';
 import '../../../core/core.dart';
-import '../models/cart_model.dart';
+import '../../home/bloc/checkout/checkout_bloc.dart';
 
 class CartTile extends StatelessWidget {
-  final CartModel data;
+  final ProductQuantityModel data;
   const CartTile({super.key, required this.data});
 
   @override
@@ -41,8 +43,8 @@ class CartTile extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                    child: Image.asset(
-                      data.product.images.first,
+                    child: Image.network(
+                      data.product.image!,
                       width: 68.0,
                       height: 68.0,
                     ),
@@ -52,7 +54,7 @@ class CartTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data.product.name,
+                        data.product.name!,
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -61,7 +63,7 @@ class CartTile extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            data.product.priceFormat,
+                            data.product.price!.currencyFormatRp,
                             style: const TextStyle(
                               color: AppColors.primary,
                               fontSize: 16,
@@ -74,60 +76,65 @@ class CartTile extends StatelessWidget {
                   ),
                 ],
               ),
-              StatefulBuilder(
-                builder: (context, setState) => Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ClipRRect(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0)),
-                      child: InkWell(
-                        onTap: () {
-                          if (data.quantity > 1) {
-                            data.quantity--;
-                            setState(() {});
-                          }
-                        },
-                        child: const ColoredBox(
-                          color: AppColors.primary,
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Icon(
-                              Icons.remove,
-                              color: AppColors.white,
+              BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5.0)),
+                        child: InkWell(
+                          onTap: () {
+                            // if (data.quantity > 1) {
+                            context.read<CheckoutBloc>().add(
+                                  CheckoutEvent.removeItemFromCart(
+                                      data.product),
+                                );
+                            // }
+                          },
+                          child: const ColoredBox(
+                            color: AppColors.primary,
+                            child: Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: Icon(
+                                Icons.remove,
+                                color: AppColors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SpaceWidth(4.0),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('${data.quantity}'),
-                    ),
-                    const SpaceWidth(4.0),
-                    ClipRRect(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0)),
-                      child: InkWell(
-                        onTap: () {
-                          data.quantity++;
-                          setState(() {});
-                        },
-                        child: const ColoredBox(
-                          color: AppColors.primary,
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Icon(
-                              Icons.add,
-                              color: AppColors.white,
+                      const SpaceWidth(4.0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('${data.quantity}'),
+                      ),
+                      const SpaceWidth(4.0),
+                      ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5.0)),
+                        child: InkWell(
+                          onTap: () {
+                            context.read<CheckoutBloc>().add(
+                                  CheckoutEvent.addItemToCart(data.product),
+                                );
+                          },
+                          child: const ColoredBox(
+                            color: AppColors.primary,
+                            child: Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: Icon(
+                                Icons.add,
+                                color: AppColors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
