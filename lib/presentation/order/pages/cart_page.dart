@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:online_shop_fic/data/datasource/auth_local_datasource.dart';
 
 import '../../../core/components/buttons.dart';
 import '../../../core/components/spaces.dart';
@@ -163,13 +164,18 @@ class CartPage extends StatelessWidget {
                 },
               );
               return Button.filled(
-                onPressed: () {
-                  context.goNamed(
-                    RouteConstants.address,
-                    pathParameters: PathParameters(
-                      rootTab: RootTab.order,
-                    ).toMap(),
-                  );
+                onPressed: () async {
+                  final isAuth = await AuthLocalDatasource().isAuth();
+                  if (!isAuth) {
+                    context.goNamed(RouteConstants.login);
+                  } else {
+                    context.goNamed(
+                      RouteConstants.orderDetail,
+                      pathParameters: PathParameters(
+                        rootTab: RootTab.order,
+                      ).toMap(),
+                    );
+                  }
                 },
                 label: 'Checkout (${totalItemCart.toString()})',
               );
