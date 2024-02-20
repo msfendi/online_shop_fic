@@ -30,9 +30,9 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void dispose() {
     phoneController.dispose();
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
-    nameController.dispose();
     super.dispose();
   }
 
@@ -58,7 +58,6 @@ class _RegisterPageState extends State<RegisterPage> {
           const SpaceHeight(60.0),
           TextFormField(
             controller: nameController,
-            obscureText: true,
             decoration: InputDecoration(
               labelText: 'Name',
               prefixIcon: Padding(
@@ -119,9 +118,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     onPressed: () {
                       context.read<RegisterBloc>().add(
                             RegisterEvent.register(
+                              name: nameController.text,
                               email: emailController.text,
                               password: passwordController.text,
-                              name: nameController.text,
                             ),
                           );
                     },

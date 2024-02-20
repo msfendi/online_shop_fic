@@ -34,8 +34,7 @@ class AuthRemoteDatasource {
       'phone': '081234567890',
       'roles': 'USER',
     });
-    print(response.body);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return Right(AuthResponse.fromJson(response.body));
     } else {
       return const Left('Internal Server Error');

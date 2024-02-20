@@ -14,9 +14,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<_Register>((event, emit) async {
       emit(const _Loading());
       final result = await _authRemoteDatasource.register(
+        event.name,
         event.email,
         event.password,
-        event.name,
       );
       result.fold(
         (l) => emit(_Error(l)),

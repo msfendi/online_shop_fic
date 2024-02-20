@@ -9,8 +9,6 @@ import '../../../core/components/spaces.dart';
 import '../../../core/core.dart';
 import '../../../core/router/app_router.dart';
 import '../../home/bloc/checkout/checkout_bloc.dart';
-import '../../home/models/product_model.dart';
-import '../../home/models/store_model.dart';
 import '../widgets/cart_tile.dart';
 
 class CartPage extends StatelessWidget {
@@ -18,43 +16,6 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<ProductModel> carts = [
-      ProductModel(
-        images: [
-          Assets.images.products.earphone.path,
-          Assets.images.products.earphone.path,
-          Assets.images.products.earphone.path,
-        ],
-        name: 'Earphone',
-        price: 320000,
-        stock: 20,
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-        store: StoreModel(
-          name: 'CWB Online Store',
-          type: StoreEnum.officialStore,
-          imageUrl: 'https://avatars.githubusercontent.com/u/534678?v=4',
-        ),
-      ),
-      ProductModel(
-        images: [
-          Assets.images.products.sepatu.path,
-          Assets.images.products.sepatu2.path,
-          Assets.images.products.sepatu.path,
-        ],
-        name: 'Sepatu Nike',
-        price: 2200000,
-        stock: 20,
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-        store: StoreModel(
-          name: 'CWB Online Store',
-          type: StoreEnum.officialStore,
-          imageUrl: 'https://avatars.githubusercontent.com/u/534678?v=4',
-        ),
-      ),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
@@ -103,7 +64,7 @@ class CartPage extends StatelessWidget {
           BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
               return state.maybeWhen(
-                orElse: () => SizedBox.shrink(),
+                orElse: () => const SizedBox.shrink(),
                 loaded: (checkout) {
                   return ListView.separated(
                     shrinkWrap: true,
@@ -167,8 +128,10 @@ class CartPage extends StatelessWidget {
                 onPressed: () async {
                   final isAuth = await AuthLocalDatasource().isAuth();
                   if (!isAuth) {
+                    // ignore: use_build_context_synchronously
                     context.goNamed(RouteConstants.login);
                   } else {
+                    // ignore: use_build_context_synchronously
                     context.goNamed(
                       RouteConstants.orderDetail,
                       pathParameters: PathParameters(
