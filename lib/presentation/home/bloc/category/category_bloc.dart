@@ -14,7 +14,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       final response = await _categoryRemoteDataSource.getCategories();
 
       response.fold(
-        (l) => emit(CategoryState.error('Server Mengalami Gangguan')),
+        (l) => emit(const CategoryState.error('Server Mengalami Gangguan')),
         (r) => emit(CategoryState.loaded(r.data!)),
       );
     });

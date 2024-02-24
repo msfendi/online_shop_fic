@@ -39,6 +39,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/person.svg
   SvgGenImage get person => const SvgGenImage('assets/icons/person.svg');
 
+  /// File path: assets/icons/routing.svg
+  SvgGenImage get routing => const SvgGenImage('assets/icons/routing.svg');
+
   /// File path: assets/icons/search.svg
   SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
 
@@ -56,6 +59,7 @@ class $AssetsIconsGen {
         order,
         password,
         person,
+        routing,
         search,
         shieldDone
       ];

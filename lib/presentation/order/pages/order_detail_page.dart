@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:online_shop_fic/presentation/auth/bloc/logout/logout_bloc.dart';
 
 import '../../../core/components/buttons.dart';
 import '../../../core/router/app_router.dart';
@@ -16,39 +14,48 @@ class OrderDetailPage extends StatelessWidget {
         title: const Text('Order Detail'),
       ),
       body: Center(
-        child: BlocConsumer<LogoutBloc, LogoutState>(
-          listener: (context, state) {
-            state.maybeWhen(
-              orElse: () {},
-              loaded: (message) {
-                context.goNamed(
-                  RouteConstants.root,
-                  pathParameters: PathParameters().toMap(),
-                );
-              },
-              error: (message) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(message),
-                  ),
-                );
-              },
+        child: Button.filled(
+          onPressed: () {
+            context.goNamed(
+              RouteConstants.address,
+              pathParameters: PathParameters().toMap(),
             );
           },
-          builder: (context, state) {
-            return state.maybeMap(
-              orElse: () => Button.filled(
-                onPressed: () {
-                  context.read<LogoutBloc>().add(
-                        const LogoutEvent.logout(),
-                      );
-                },
-                label: 'Logout',
-              ),
-              loading: (_) => const CircularProgressIndicator(),
-            );
-          },
+          label: 'address',
         ),
+        //   BlocConsumer<LogoutBloc, LogoutState>(
+        //   listener: (context, state) {
+        //     state.maybeWhen(
+        //       orElse: () {},
+        //       loaded: (message) {
+        //         context.goNamed(
+        //           RouteConstants.root,
+        //           pathParameters: PathParameters().toMap(),
+        //         );
+        //       },
+        //       error: (message) {
+        //         ScaffoldMessenger.of(context).showSnackBar(
+        //           SnackBar(
+        //             content: Text(message),
+        //           ),
+        //         );
+        //       },
+        //     );
+        //   },
+        //   builder: (context, state) {
+        //     return state.maybeMap(
+        //       orElse: () => Button.filled(
+        //         onPressed: () {
+        //           context.read<LogoutBloc>().add(
+        //                 const LogoutEvent.logout(),
+        //               );
+        //         },
+        //         label: 'Logout',
+        //       ),
+        //       loading: (_) => const CircularProgressIndicator(),
+        //     );
+        //   },
+        // ),
       ),
     );
   }

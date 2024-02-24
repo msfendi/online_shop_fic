@@ -15,7 +15,7 @@ class AllProductBloc extends Bloc<AllProductEvent, AllProductState> {
       final response = await _productRemoteDatasource.getAllProduct();
 
       response.fold(
-        (l) => emit(AllProductState.error('Server Mengalami Gangguan')),
+        (l) => emit(const AllProductState.error('Server Mengalami Gangguan')),
         (r) => emit(AllProductState.loaded(r.data!.data!)),
       );
     });

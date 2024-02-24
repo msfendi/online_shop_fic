@@ -12,7 +12,7 @@ class CategoryRemoteDataSource {
     if (response.statusCode == 200) {
       return Right(CategoryResponse.fromJson(response.body));
     } else {
-      return Left('Failed to load categories');
+      return const Left('Failed to load categories');
     }
   }
 }

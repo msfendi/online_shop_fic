@@ -13,7 +13,7 @@ class ProductRemoteDatasource {
     if (response.statusCode == 200) {
       return Right(ProductResponse.fromJson(response.body));
     } else {
-      return Left('Failed to load products');
+      return const Left('Failed to load products');
     }
   }
 
@@ -26,7 +26,7 @@ class ProductRemoteDatasource {
     if (response.statusCode == 200) {
       return Right(ProductResponse.fromJson(response.body));
     } else {
-      return Left('Failed to load products');
+      return const Left('Failed to load products');
     }
   }
 }

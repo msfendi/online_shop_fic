@@ -10,12 +10,12 @@ part 'top_rated_bloc.freezed.dart';
 
 class TopRatedBloc extends Bloc<TopRatedEvent, TopRatedState> {
   final ProductRemoteDatasource _productRemoteDatasource;
-  TopRatedBloc(this._productRemoteDatasource) : super(_Initial()) {
+  TopRatedBloc(this._productRemoteDatasource) : super(const _Initial()) {
     on<_GetTopRated>((event, emit) async {
       final response = await _productRemoteDatasource.getProductByCategoryId(2);
 
       response.fold(
-        (l) => emit(TopRatedState.error('Data gagal ditampilkan')),
+        (l) => emit(const TopRatedState.error('Data gagal ditampilkan')),
         (r) => emit(TopRatedState.loaded(r.data!.data!)),
       );
     });

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:online_shop_fic/data/models/responses/address_response_model.dart';
 import 'package:online_shop_fic/presentation/home/pages/dashboard_page.dart';
 import 'package:online_shop_fic/presentation/intro/splash_pages.dart';
 
+import '../../presentation/address/pages/add_address_page.dart';
+import '../../presentation/address/pages/address_page.dart';
+import '../../presentation/address/pages/edit_address_page.dart';
 import '../../presentation/auth/pages/login_page.dart';
 import '../../presentation/auth/pages/register_page.dart';
 import '../../presentation/order/pages/cart_page.dart';
@@ -97,6 +101,53 @@ class AppRouter {
             //     ],
             //   ),
             // ],
+          ),
+          GoRoute(
+            name: RouteConstants.address,
+            path: RouteConstants.addressPath,
+            builder: (context, state) => const AddressPage(),
+            routes: [
+              GoRoute(
+                name: RouteConstants.addAddress,
+                path: RouteConstants.addAddressPath,
+                builder: (context, state) => const AddAddressPage(),
+              ),
+              GoRoute(
+                name: RouteConstants.editAddress,
+                path: RouteConstants.editAddressPath,
+                builder: (context, state) {
+                  Address args = state.extra as Address;
+                  return EditAddressPage(data: args);
+                },
+              ),
+              // GoRoute(
+              //   name: RouteConstants.orderDetail,
+              //   path: RouteConstants.orderDetailPath,
+              //   builder: (context, state) => const OrderDetailPage(),
+              //   routes: [
+              //     GoRoute(
+              //       name: RouteConstants.paymentDetail,
+              //       path: RouteConstants.paymentDetailPath,
+              //       builder: (context, state) => const PaymentDetailPage(),
+              //       routes: [
+              //         GoRoute(
+              //           name: RouteConstants.trackingOrder,
+              //           path: RouteConstants.trackingOrderPath,
+              //           builder: (context, state) => const TrackingOrderPage(),
+              //           routes: [
+              //             GoRoute(
+              //               name: RouteConstants.shippingDetail,
+              //               path: RouteConstants.shippingDetailPath,
+              //               builder: (context, state) =>
+              //                   const ShippingDetailPage(),
+              //             ),
+              //           ],
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
+            ],
           ),
         ],
       ),

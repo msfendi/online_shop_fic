@@ -3,9 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_shop_fic/core/constants/colors.dart';
 import 'package:online_shop_fic/core/router/app_router.dart';
+import 'package:online_shop_fic/data/datasource/address_remote_datasource.dart';
 import 'package:online_shop_fic/data/datasource/auth_remote_datasource.dart';
 import 'package:online_shop_fic/data/datasource/category_remote_datasource.dart';
 import 'package:online_shop_fic/data/datasource/product_remote_datasource.dart';
+import 'package:online_shop_fic/data/datasource/rajaongkir_remote_datasource.dart';
+import 'package:online_shop_fic/presentation/address/bloc/add_address/add_address_bloc.dart';
+import 'package:online_shop_fic/presentation/address/bloc/city/city_bloc.dart';
+import 'package:online_shop_fic/presentation/address/bloc/edit_address/edit_address_bloc.dart';
+import 'package:online_shop_fic/presentation/address/bloc/province/province_bloc.dart';
+import 'package:online_shop_fic/presentation/address/bloc/subdistrict/subdistrict_bloc.dart';
 import 'package:online_shop_fic/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:online_shop_fic/presentation/auth/bloc/logout/logout_bloc.dart';
 import 'package:online_shop_fic/presentation/auth/bloc/register/register_bloc.dart';
@@ -15,6 +22,7 @@ import 'package:online_shop_fic/presentation/home/bloc/checkout/checkout_bloc.da
 import 'package:online_shop_fic/presentation/home/bloc/new_arrival/new_arrival_bloc.dart';
 import 'package:online_shop_fic/presentation/home/bloc/top_rated/top_rated_bloc.dart';
 
+import 'presentation/address/bloc/address/address_bloc.dart';
 import 'presentation/home/bloc/all_product/all_product_bloc.dart';
 
 void main() {
@@ -57,6 +65,24 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => RegisterBloc(AuthRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => AddressBloc(AddressRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => ProvinceBloc(RajaongkirRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => CityBloc(RajaongkirRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => SubdistrictBloc(RajaongkirRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => AddAddressBloc(AddressRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => EditAddressBloc(AddressRemoteDatasource()),
         ),
       ],
       child: MaterialApp.router(
