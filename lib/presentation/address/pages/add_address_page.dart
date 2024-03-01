@@ -57,6 +57,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
 
   @override
   void initState() {
+    // ketika page ini dijalankan, maka akan memanggil event getProvince dari bloc
     context.read<ProvinceBloc>().add(const ProvinceEvent.getProvince());
     super.initState();
   }
@@ -80,6 +81,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
             label: 'Alamat jalan',
           ),
           const SpaceHeight(24.0),
+
+          // digunakan untuk menampilkan data provinsi yang diambil dari server
           BlocBuilder<ProvinceBloc, ProvinceState>(
             builder: (context, state) {
               return state.maybeWhen(
@@ -100,6 +103,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                         onChanged: (value) {
                           setState(() {
                             selectedProvince = value!;
+                            // ketika provinsi dipilih, maka akan memanggil event getCity dari bloc
                             context.read<CityBloc>().add(CityEvent.getCity(
                                 selectedProvince.provinceId!));
                           });
@@ -108,6 +112,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             },
           ),
           const SpaceHeight(24.0),
+          // digunakan untuk menampilkan data kota yang diambil dari server
           BlocBuilder<CityBloc, CityState>(
             builder: (context, state) {
               return state.maybeWhen(
@@ -125,6 +130,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                     onChanged: (value) {
                       setState(() {
                         selectedCity = value!;
+                        // ketika kota dipilih, maka akan memanggil event getSubdistrict dari bloc
                         context.read<SubdistrictBloc>().add(
                             SubdistrictEvent.getSubdistrict(
                                 selectedCity.cityId!));
@@ -136,6 +142,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             },
           ),
           const SpaceHeight(24.0),
+          // digunakan untuk menampilkan data kecamatan yang diambil dari server
           BlocBuilder<SubdistrictBloc, SubdistrictState>(
             builder: (context, state) {
               return state.maybeWhen(

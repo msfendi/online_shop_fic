@@ -11,6 +11,7 @@ part 'province_bloc.freezed.dart';
 class ProvinceBloc extends Bloc<ProvinceEvent, ProvinceState> {
   final RajaongkirRemoteDatasource rajaongkirRemoteDatasource;
   ProvinceBloc(this.rajaongkirRemoteDatasource) : super(const _Initial()) {
+    // Ketika event getProvince dipanggil, maka akan mengirim request ke server untuk mengambil data provinsi
     on<_GetProvince>((event, emit) async {
       emit(const _Loading());
       final result = await rajaongkirRemoteDatasource.getProvinces();

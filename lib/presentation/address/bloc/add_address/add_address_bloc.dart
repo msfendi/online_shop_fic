@@ -12,10 +12,12 @@ part 'add_address_bloc.freezed.dart';
 class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   final AddressRemoteDatasource addressRemoteDatasource;
   AddAddressBloc(this.addressRemoteDatasource) : super(const _Initial()) {
+    // Ketika event _AddAddress dipanggil, maka akan mengirim request
     on<_AddAddress>((event, emit) async {
       emit(const _Loading());
       final result =
           await addressRemoteDatasource.addAddress(event.addressRequest);
+      // jika response dari server adalah success, maka akan mengubah response body menjadi object AddressResponse
       result.fold(
         (l) => emit(_Error(l)),
         (r) => emit(const _Loaded()),

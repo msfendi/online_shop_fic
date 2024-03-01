@@ -23,6 +23,7 @@ class _AddressPageState extends State<AddressPage> {
   @override
   void initState() {
     // TODO: implement initState
+    // memanggil event getAddress dari bloc untuk mengambil data alamat dari server
     context.read<AddressBloc>().add(const AddressEvent.getAddress());
     super.initState();
   }
@@ -113,6 +114,8 @@ class _AddressPageState extends State<AddressPage> {
                   error: (message) => Center(
                     child: Text(message),
                   ),
+
+                  // jika state adalah loaded, maka akan menampilkan data alamat yang diambil dari server
                   loaded: (addresses) {
                     int selectedIndex = addresses
                         .indexWhere((element) => element.isDefault == 1);
@@ -143,29 +146,6 @@ class _AddressPageState extends State<AddressPage> {
                     );
                   },
                 );
-                // return ListView.separated(
-                //   shrinkWrap: true,
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   itemCount: addresses.length,
-                //   itemBuilder: (context, index) => AddressTile(
-                //     isSelected: selectedIndex == index,
-                //     data: addresses[index],
-                //     onTap: () {
-                //       selectedIndex = index;
-                //       setState(() {});
-                //     },
-                //     onEditTap: () {
-                //       context.goNamed(
-                //         RouteConstants.editAddress,
-                //         pathParameters: PathParameters(
-                //           rootTab: RootTab.order,
-                //         ).toMap(),
-                //         extra: addresses[index],
-                //       );
-                //     },
-                //   ),
-                //   separatorBuilder: (context, index) => const SpaceHeight(16.0),
-                // );
               },
             ),
             const SpaceHeight(40.0),

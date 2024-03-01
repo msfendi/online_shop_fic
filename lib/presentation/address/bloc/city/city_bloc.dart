@@ -11,6 +11,7 @@ part 'city_bloc.freezed.dart';
 class CityBloc extends Bloc<CityEvent, CityState> {
   final RajaongkirRemoteDatasource rajaongkirRemoteDatasource;
   CityBloc(this.rajaongkirRemoteDatasource) : super(const _Initial()) {
+    // Ketika event getCity dipanggil, maka akan mengirim request ke server untuk mengambil data kota
     on<_GetCity>((event, emit) async {
       // TODO: implement event handler
       emit(const _Loading());

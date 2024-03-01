@@ -9,17 +9,23 @@ part 'address_state.dart';
 part 'address_bloc.freezed.dart';
 
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
+  // AddressRemoteDatasource adalah class yang berfungsi untuk mengambil data alamat dari server
   final AddressRemoteDatasource addressRemoteDatasource;
+
   AddressBloc(this.addressRemoteDatasource) : super(const _Initial()) {
+    // Ketika event getAddress dipanggil, maka akan mengirim request ke server untuk mengambil data alamat
     on<_GetAddress>((event, emit) async {
       emit(const _Loading());
+      // mengambil data alamat dari server
       final result = await addressRemoteDatasource.getAddress();
+      // jika response dari server adalah success, maka akan mengubah response body menjadi object AddressResponse
       result.fold(
         (l) => emit(_Error(l)),
         (r) => emit(_Loaded(r.data!)),
       );
     });
 
+    // ketika event show
     on<_ShowAddress>((event, emit) async {
       emit(const _Loading());
       final result = await addressRemoteDatasource.getAddressById(event.id);

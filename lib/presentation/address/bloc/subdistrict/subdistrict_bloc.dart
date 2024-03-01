@@ -11,6 +11,7 @@ part 'subdistrict_bloc.freezed.dart';
 class SubdistrictBloc extends Bloc<SubdistrictEvent, SubdistrictState> {
   final RajaongkirRemoteDatasource rajaongkirRemoteDatasource;
   SubdistrictBloc(this.rajaongkirRemoteDatasource) : super(const _Initial()) {
+    // Ketika event getSubdistrict dipanggil, maka akan mengirim request ke server untuk mengambil data kecamatan
     on<_GetSubdistrict>((event, emit) async {
       // TODO: implement event handler
       emit(const _Loading());

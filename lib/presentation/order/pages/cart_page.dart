@@ -133,7 +133,7 @@ class CartPage extends StatelessWidget {
                   } else {
                     // ignore: use_build_context_synchronously
                     context.goNamed(
-                      RouteConstants.orderDetail,
+                      RouteConstants.address,
                       pathParameters: PathParameters(
                         rootTab: RootTab.order,
                       ).toMap(),
