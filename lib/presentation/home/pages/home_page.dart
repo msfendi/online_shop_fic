@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
           BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
               return state.maybeWhen(
-                loaded: (cart) {
+                loaded: (cart, _, __, ___, ____, _____) {
                   final totalItemCart = cart.fold<int>(0, (prev, element) {
                     return prev + element.quantity;
                   });

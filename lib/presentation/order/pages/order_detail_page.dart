@@ -1,61 +1,62 @@
 // ignore_for_file: unused_import, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:online_shop_fic/core/extensions/int_ext.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/buttons.dart';
+import '../../../core/components/components.dart';
 import '../../../core/components/spaces.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/router/app_router.dart';
+import '../../home/bloc/checkout/checkout_bloc.dart';
 import '../../home/models/product_model.dart';
 import '../../home/models/store_model.dart';
+import '../bloc/cost/cost_bloc.dart';
 import '../models/shipping_model.dart';
 import '../widgets/cart_tile.dart';
 
-class OrderDetailPage extends StatelessWidget {
+class OrderDetailPage extends StatefulWidget {
   const OrderDetailPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final List<ProductModel> carts = [
-      ProductModel(
-        images: [
-          Assets.images.products.earphone.path,
-          Assets.images.products.earphone.path,
-          Assets.images.products.earphone.path,
-        ],
-        name: 'Earphone',
-        price: 320000,
-        stock: 20,
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-        store: StoreModel(
-          name: 'CWB Online Store',
-          type: StoreEnum.officialStore,
-          imageUrl: 'https://avatars.githubusercontent.com/u/534678?v=4',
-        ),
-      ),
-      ProductModel(
-        images: [
-          Assets.images.products.sepatu.path,
-          Assets.images.products.sepatu2.path,
-          Assets.images.products.sepatu.path,
-        ],
-        name: 'Sepatu Nike',
-        price: 1200000,
-        stock: 20,
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-        store: StoreModel(
-          name: 'CWB Online Store',
-          type: StoreEnum.officialStore,
-          imageUrl: 'https://avatars.githubusercontent.com/u/534678?v=4',
-        ),
-      ),
-    ];
+  State<OrderDetailPage> createState() => _OrderDetailPageState();
+}
 
+var selectedCourier = '';
+
+class _OrderDetailPageState extends State<OrderDetailPage> {
+  @override
+  Widget build(BuildContext context) {
+    final couriers = <String>[
+      'jne',
+      'pos',
+      'tiki',
+      'rpx',
+      'pandu',
+      'wahana',
+      'sicepat',
+      'jnt',
+      'pahala',
+      'sap',
+      'jet',
+      'indah',
+      'dse',
+      'slis',
+      'first',
+      'ncs',
+      'star',
+      'ninja',
+      'lion',
+      'idl',
+      'rex',
+      'ide',
+      'sentral',
+      'anteraja',
+      'jtl'
+    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Orders'),
@@ -76,18 +77,35 @@ class OrderDetailPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: [
-          // ListView.separated(
-          //   shrinkWrap: true,
-          //   physics: const NeverScrollableScrollPhysics(),
-          //   itemCount: carts.length,
-          //   itemBuilder: (context, index) => CartTile(
-          //     data: CartModel(
-          //       product: carts[index],
-          //       quantity: 1,
-          //     ),
-          //   ),
-          //   separatorBuilder: (context, index) => const SpaceHeight(16.0),
-          // ),
+          BlocBuilder<CheckoutBloc, CheckoutState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                  orElse: () => const SizedBox.shrink(),
+                  loaded: (checkout, _, __, ___, ____, _____) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: checkout.isNotEmpty ? checkout.length : 0,
+                      itemBuilder: (context, index) => CartTile(
+                        data: checkout[index],
+                      ),
+                      separatorBuilder: (context, index) =>
+                          const SpaceHeight(16.0),
+                    );
+                  });
+            },
+          ),
+          const SpaceHeight(36.0),
+          CustomDropdown<String>(
+            value: couriers.first,
+            items: couriers,
+            label: 'Pilih Kurir Pengiriman',
+            onChanged: (value) {
+              setState(() {
+                selectedCourier = value!;
+              });
+            },
+          ),
           const SpaceHeight(36.0),
           const _SelectShipping(),
           // const _ShippingSelected(),
@@ -111,11 +129,24 @@ class OrderDetailPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
-                1520000.currencyFormatRp,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
+              BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  final total = state.maybeWhen(
+                    orElse: () => 0,
+                    loaded: (checkout, _, __, ___, ____, _____) {
+                      return checkout.fold<int>(0, (prev, element) {
+                        return prev +
+                            (element.product.price! * element.quantity);
+                      });
+                    },
+                  );
+                  return Text(
+                    total.currencyFormatRp,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -129,11 +160,21 @@ class OrderDetailPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
-                25000.currencyFormatRp,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
+              BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  final totalShippingCost = state.maybeWhen(
+                    orElse: () => 0,
+                    loaded: (_, __, ___, ____, _____, shippingCost) {
+                      return shippingCost;
+                    },
+                  );
+                  return Text(
+                    totalShippingCost.currencyFormatRp,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -149,11 +190,25 @@ class OrderDetailPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
-                1545000.currencyFormatRp,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
+              BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  final totalShipping = state.maybeWhen(
+                    orElse: () => 0,
+                    loaded: (checkout, _, __, ___, ____, shippingCost) {
+                      return checkout.fold<int>(0, (prev, element) {
+                            return prev +
+                                (element.product.price! * element.quantity);
+                          }) +
+                          shippingCost;
+                    },
+                  );
+                  return Text(
+                    totalShipping.currencyFormatRp,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -179,28 +234,10 @@ class _SelectShipping extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedPayment = ValueNotifier<int>(0);
-    final shippings = [
-      ShippingModel(
-        type: 'Reguler',
-        priceStart: 20000,
-        priceEnd: 30000,
-        estimate: DateTime.now().subtract(const Duration(days: 3)),
-      ),
-      ShippingModel(
-        type: 'Kargo',
-        priceStart: 20000,
-        priceEnd: 30000,
-        estimate: DateTime.now().subtract(const Duration(days: 3)),
-      ),
-      ShippingModel(
-        type: 'Ekonomi',
-        priceStart: 20000,
-        priceEnd: 30000,
-        estimate: DateTime.now().subtract(const Duration(days: 4)),
-      ),
-    ];
-
     void onSelectShippingTap() {
+      context
+          .read<CostBloc>()
+          .add(CostEvent.getCost('3126', '574', selectedCourier));
       showModalBottomSheet(
         context: context,
         useSafeArea: true,
@@ -282,24 +319,51 @@ class _SelectShipping extends StatelessWidget {
                 ),
                 const SpaceHeight(30.0),
                 const Divider(color: AppColors.stroke),
-                ValueListenableBuilder(
-                  valueListenable: selectedPayment,
-                  builder: (context, value, _) => ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final item = shippings[index];
-                      return ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        onTap: () {},
-                        title: Text('${item.type} (${item.priceFormat})'),
-                        subtitle: Text('Estimasi tiba ${item.estimateFormat}'),
-                      );
-                    },
-                    separatorBuilder: (context, index) =>
-                        const Divider(color: AppColors.stroke),
-                    itemCount: shippings.length,
-                  ),
+                BlocBuilder<CostBloc, CostState>(
+                  builder: (context, state) {
+                    return state.maybeWhen(
+                      orElse: () => const SizedBox.shrink(),
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      loaded: (costResponse) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final item = costResponse
+                                .rajaongkir?.results![0].costs![index];
+                            return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              onTap: () {
+                                selectedPayment.value = index;
+                                context.read<CheckoutBloc>().add(
+                                    CheckoutEvent.addShippingService(
+                                        selectedCourier,
+                                        item!.cost![0].value!));
+                                context.pop();
+                              },
+                              title: Text(
+                                  '${item!.service} - ${item.description} (${item.cost![0].value!.currencyFormatRp})'),
+                              subtitle: Text(
+                                  'Estimasi tiba ${item.cost![0].etd} hari'),
+                              trailing: Radio<int>(
+                                value: index,
+                                groupValue: selectedPayment.value,
+                                onChanged: (value) {
+                                  selectedPayment.value = value!;
+                                },
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const Divider(color: AppColors.stroke),
+                          itemCount: costResponse
+                              .rajaongkir!.results![0].costs!.length,
+                        );
+                      },
+                    );
+                  },
                 ),
               ],
             ),
@@ -330,85 +394,3 @@ class _SelectShipping extends StatelessWidget {
     );
   }
 }
-
-class _ShippingSelected extends StatelessWidget {
-  const _ShippingSelected();
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 20.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.stroke),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-        ),
-        child: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Reguler',
-                  style: TextStyle(fontSize: 16),
-                ),
-                Spacer(),
-                Text(
-                  'Edit',
-                  style: TextStyle(fontSize: 16),
-                ),
-                SpaceWidth(4.0),
-                Icon(Icons.chevron_right),
-              ],
-            ),
-            SpaceHeight(12.0),
-            Text(
-              'JNE (Rp. 25.000)',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Text('Estimasi tiba 2 Januari 2024'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-//   BlocConsumer<LogoutBloc, LogoutState>(
-        //   listener: (context, state) {
-        //     state.maybeWhen(
-        //       orElse: () {},
-        //       loaded: (message) {
-        //         context.goNamed(
-        //           RouteConstants.root,
-        //           pathParameters: PathParameters().toMap(),
-        //         );
-        //       },
-        //       error: (message) {
-        //         ScaffoldMessenger.of(context).showSnackBar(
-        //           SnackBar(
-        //             content: Text(message),
-        //           ),
-        //         );
-        //       },
-        //     );
-        //   },
-        //   builder: (context, state) {
-        //     return state.maybeMap(
-        //       orElse: () => Button.filled(
-        //         onPressed: () {
-        //           context.read<LogoutBloc>().add(
-        //                 const LogoutEvent.logout(),
-        //               );
-        //         },
-        //         label: 'Logout',
-        //       ),
-        //       loading: (_) => const CircularProgressIndicator(),
-        //     );
-        //   },
-        // ),

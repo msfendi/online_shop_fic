@@ -21,6 +21,7 @@ import 'package:online_shop_fic/presentation/home/bloc/category/category_bloc.da
 import 'package:online_shop_fic/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:online_shop_fic/presentation/home/bloc/new_arrival/new_arrival_bloc.dart';
 import 'package:online_shop_fic/presentation/home/bloc/top_rated/top_rated_bloc.dart';
+import 'package:online_shop_fic/presentation/order/bloc/cost/cost_bloc.dart';
 
 import 'presentation/address/bloc/address/address_bloc.dart';
 import 'presentation/home/bloc/all_product/all_product_bloc.dart';
@@ -83,6 +84,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => EditAddressBloc(AddressRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => CostBloc(RajaongkirRemoteDatasource()),
         ),
       ],
       child: MaterialApp.router(

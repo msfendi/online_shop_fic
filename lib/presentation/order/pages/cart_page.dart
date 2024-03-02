@@ -23,7 +23,7 @@ class CartPage extends StatelessWidget {
           BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
               return state.maybeWhen(
-                loaded: (cart) {
+                loaded: (cart, _, __, ___, ____, _____) {
                   final totalItemCart = cart.fold<int>(0, (prev, element) {
                     return prev + element.quantity;
                   });
@@ -65,7 +65,7 @@ class CartPage extends StatelessWidget {
             builder: (context, state) {
               return state.maybeWhen(
                 orElse: () => const SizedBox.shrink(),
-                loaded: (checkout) {
+                loaded: (checkout, _, __, ___, ____, _____) {
                   return ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -95,7 +95,7 @@ class CartPage extends StatelessWidget {
                 builder: (context, state) {
                   final total = state.maybeWhen(
                     orElse: () => 0,
-                    loaded: (cart) {
+                    loaded: (cart, _, __, ___, ____, _____) {
                       return cart.fold<int>(0, (prev, element) {
                         return prev +
                             (element.product.price! * element.quantity);
@@ -118,7 +118,7 @@ class CartPage extends StatelessWidget {
             builder: (context, state) {
               final totalItemCart = state.maybeWhen(
                 orElse: () => 0,
-                loaded: (cart) {
+                loaded: (cart, _, __, ___, ____, _____) {
                   return cart.fold<int>(0, (prev, element) {
                     return prev + element.quantity;
                   });

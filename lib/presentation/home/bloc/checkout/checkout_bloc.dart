@@ -9,7 +9,7 @@ part 'checkout_state.dart';
 part 'checkout_bloc.freezed.dart';
 
 class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
-  CheckoutBloc() : super(const _Loaded([])) {
+  CheckoutBloc() : super(const _Loaded([], 0, '', '', '', 0)) {
     on<_AddItemToCart>((event, emit) {
       final currentState = state as _Loaded;
       // cek apakah ada item didalam keranjang, dan jika ada apakah item tersebut sama dengan yang akan ditambahkan
@@ -26,13 +26,25 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         final newItemsCheckout = currentState.productCheckout
             .map((e) => e == item ? newItem : e)
             .toList();
-        emit(_Loaded(newItemsCheckout));
+        emit(_Loaded(
+            newItemsCheckout,
+            currentState.addressId,
+            currentState.paymentMethod,
+            currentState.paymentVaName,
+            currentState.shippingService,
+            currentState.shippingCost));
       } else {
         // jika tidak ada, tambahkan item baru dengan quantity 1
         final newItem = ProductQuantityModel(event.product, 1);
         // copy list keranjang dengan item yang sudah ditambahkan
         final newItemsCheckout = [...currentState.productCheckout, newItem];
-        emit(_Loaded(newItemsCheckout));
+        emit(_Loaded(
+            newItemsCheckout,
+            currentState.addressId,
+            currentState.paymentMethod,
+            currentState.paymentVaName,
+            currentState.shippingService,
+            currentState.shippingCost));
       }
     });
 
@@ -52,15 +64,71 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
           final newItemsCheckout = currentState.productCheckout
               .map((e) => e == item ? newItem : e)
               .toList();
-          emit(_Loaded(newItemsCheckout));
+          emit(_Loaded(
+              newItemsCheckout,
+              currentState.addressId,
+              currentState.paymentMethod,
+              currentState.paymentVaName,
+              currentState.shippingService,
+              currentState.shippingCost));
         } else {
           // jika quantity dari item tersebut hanya 1, maka hapus item tersebut dari keranjang
           final newItemsCheckout = currentState.productCheckout
               .where((element) => element.product.id != event.product.id)
               .toList();
-          emit(_Loaded(newItemsCheckout));
+          emit(_Loaded(
+              newItemsCheckout,
+              currentState.addressId,
+              currentState.paymentMethod,
+              currentState.paymentVaName,
+              currentState.shippingService,
+              currentState.shippingCost));
         }
       }
+    });
+
+    on<_AddAddressId>((event, emit) {
+      final currentState = state as _Loaded;
+      emit(_Loaded(
+          currentState.productCheckout,
+          event.addressId,
+          currentState.paymentMethod,
+          currentState.paymentVaName,
+          currentState.shippingService,
+          currentState.shippingCost));
+    });
+
+    on<_AddPaymentMethod>((event, emit) {
+      final currentState = state as _Loaded;
+      emit(_Loaded(
+          currentState.productCheckout,
+          currentState.addressId,
+          event.paymentMethod,
+          currentState.paymentVaName,
+          currentState.shippingService,
+          currentState.shippingCost));
+    });
+
+    on<_AddPaymentVaName>((event, emit) {
+      final currentState = state as _Loaded;
+      emit(_Loaded(
+          currentState.productCheckout,
+          currentState.addressId,
+          currentState.paymentMethod,
+          event.paymentVaName,
+          currentState.shippingService,
+          currentState.shippingCost));
+    });
+
+    on<_AddShippingService>((event, emit) {
+      final currentState = state as _Loaded;
+      emit(_Loaded(
+          currentState.productCheckout,
+          currentState.addressId,
+          currentState.paymentMethod,
+          currentState.paymentVaName,
+          event.shippingService,
+          event.shippingCost));
     });
   }
 }

@@ -9,6 +9,7 @@ import '../../../core/components/spaces.dart';
 import '../../../core/core.dart';
 import '../../../core/router/app_router.dart';
 import '../../../data/models/responses/address_response_model.dart';
+import '../../home/bloc/checkout/checkout_bloc.dart';
 import '../bloc/address/address_bloc.dart';
 import '../widgets/address_tile.dart';
 
@@ -117,32 +118,40 @@ class _AddressPageState extends State<AddressPage> {
 
                   // jika state adalah loaded, maka akan menampilkan data alamat yang diambil dari server
                   loaded: (addresses) {
-                    int selectedIndex = addresses
-                        .indexWhere((element) => element.isDefault == 1);
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: addresses.length,
-                      itemBuilder: (context, index) => AddressTile(
-                        isSelected: selectedIndex == index,
-                        data: addresses[index],
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = index;
-                          });
-                        },
-                        onEditTap: () {
-                          context.goNamed(
-                            RouteConstants.editAddress,
-                            pathParameters: PathParameters(
-                              rootTab: RootTab.order,
-                            ).toMap(),
-                            extra: addresses[index],
-                          );
-                        },
-                      ),
-                      separatorBuilder: (context, index) =>
-                          const SpaceHeight(16.0),
+                    return BlocBuilder<CheckoutBloc, CheckoutState>(
+                      builder: (context, state) {
+                        final selectedAddressId = state.maybeWhen(
+                          orElse: () => 0,
+                          loaded: (checkout, addressId, _, __, ___, ____) =>
+                              addressId,
+                        );
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: addresses.length,
+                          itemBuilder: (context, index) => AddressTile(
+                            isSelected:
+                                selectedAddressId == addresses[index].id!,
+                            data: addresses[index],
+                            onTap: () {
+                              context.read<CheckoutBloc>().add(
+                                  CheckoutEvent.addAddressId(
+                                      addresses[index].id!));
+                            },
+                            onEditTap: () {
+                              context.goNamed(
+                                RouteConstants.editAddress,
+                                pathParameters: PathParameters(
+                                  rootTab: RootTab.order,
+                                ).toMap(),
+                                extra: addresses[index],
+                              );
+                            },
+                          ),
+                          separatorBuilder: (context, index) =>
+                              const SpaceHeight(16.0),
+                        );
+                      },
                     );
                   },
                 );
@@ -178,11 +187,24 @@ class _AddressPageState extends State<AddressPage> {
                     fontSize: 16.0,
                   ),
                 ),
-                Text(
-                  20000.currencyFormatRp,
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                  ),
+                BlocBuilder<CheckoutBloc, CheckoutState>(
+                  builder: (context, state) {
+                    final subTotal = state.maybeWhen(
+                      orElse: () => 0,
+                      loaded: (checkout, _, __, ___, ____, _____) {
+                        return checkout.fold<int>(0, (prev, element) {
+                          return prev +
+                              (element.product.price! * element.quantity);
+                        });
+                      },
+                    );
+                    return Text(
+                      subTotal.currencyFormatRp,
+                      style: const TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:online_shop_fic/core/assets/assets.gen.dart';
 import 'package:online_shop_fic/core/constants/colors.dart';
 import 'package:online_shop_fic/presentation/home/pages/home_page.dart';
+import 'package:online_shop_fic/presentation/profile/pages/profil_page.dart';
 
 import '../../order/pages/cart_page.dart';
 
@@ -28,9 +29,10 @@ class _DashboardPageState extends State<DashboardPage> {
     //   child: Text('This Page 3'),
     // ),
     const CartPage(),
-    const Center(
-      child: Text('This Page 4 '),
-    ),
+    const ProfilPage()
+    // const Center(
+    //   child: Text('This Page 4 '),
+    // ),
   ];
 
   void _onItemTapped(int index) {
