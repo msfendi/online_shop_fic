@@ -124,23 +124,32 @@ class CartPage extends StatelessWidget {
                   });
                 },
               );
-              return Button.filled(
-                onPressed: () async {
-                  final isAuth = await AuthLocalDatasource().isAuth();
-                  if (!isAuth) {
-                    // ignore: use_build_context_synchronously
-                    context.goNamed(RouteConstants.login);
-                  } else {
-                    // ignore: use_build_context_synchronously
-                    context.goNamed(
-                      RouteConstants.address,
-                      pathParameters: PathParameters(
-                        rootTab: RootTab.order,
-                      ).toMap(),
-                    );
-                  }
+              return BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  final cart = state.maybeWhen(
+                    orElse: () => [],
+                    loaded: (cart, _, __, ___, ____, _____) => cart,
+                  );
+                  return Button.filled(
+                    disabled: cart == [],
+                    onPressed: () async {
+                      final isAuth = await AuthLocalDatasource().isAuth();
+                      if (!isAuth) {
+                        // ignore: use_build_context_synchronously
+                        context.goNamed(RouteConstants.login);
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        context.goNamed(
+                          RouteConstants.address,
+                          pathParameters: PathParameters(
+                            rootTab: RootTab.order,
+                          ).toMap(),
+                        );
+                      }
+                    },
+                    label: 'Checkout (${totalItemCart.toString()})',
+                  );
                 },
-                label: 'Checkout (${totalItemCart.toString()})',
               );
             },
           ),

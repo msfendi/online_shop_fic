@@ -213,14 +213,24 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             ],
           ),
           const SpaceHeight(20.0),
-          Button.filled(
-            onPressed: () {
-              context.goNamed(
-                RouteConstants.paymentDetail,
-                pathParameters: PathParameters().toMap(),
+          BlocBuilder<CheckoutBloc, CheckoutState>(
+            builder: (context, state) {
+              final shippingService = state.maybeWhen(
+                orElse: () => '',
+                loaded: (_, __, ___, ____, shippingService, _____) =>
+                    shippingService,
+              );
+              return Button.filled(
+                disabled: shippingService == '',
+                onPressed: () {
+                  context.goNamed(
+                    RouteConstants.paymentDetail,
+                    pathParameters: PathParameters().toMap(),
+                  );
+                },
+                label: 'Pilih Pembayaran',
               );
             },
-            label: 'Pilih Pembayaran',
           ),
         ],
       ),

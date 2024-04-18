@@ -20,18 +20,27 @@ mixin _$EditAddressEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(AddressRequest addressRequest) editAddress,
+    required TResult Function(String provinceId) addProvinceId,
+    required TResult Function(String cityId) addCityId,
+    required TResult Function(String districtId) addDistrictId,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(AddressRequest addressRequest)? editAddress,
+    TResult? Function(String provinceId)? addProvinceId,
+    TResult? Function(String cityId)? addCityId,
+    TResult? Function(String districtId)? addDistrictId,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(AddressRequest addressRequest)? editAddress,
+    TResult Function(String provinceId)? addProvinceId,
+    TResult Function(String cityId)? addCityId,
+    TResult Function(String districtId)? addDistrictId,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +48,27 @@ mixin _$EditAddressEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_EditAddress value) editAddress,
+    required TResult Function(_AddProvinceId value) addProvinceId,
+    required TResult Function(_AddCityId value) addCityId,
+    required TResult Function(_AddDistrictId value) addDistrictId,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_EditAddress value)? editAddress,
+    TResult? Function(_AddProvinceId value)? addProvinceId,
+    TResult? Function(_AddCityId value)? addCityId,
+    TResult? Function(_AddDistrictId value)? addDistrictId,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_EditAddress value)? editAddress,
+    TResult Function(_AddProvinceId value)? addProvinceId,
+    TResult Function(_AddCityId value)? addCityId,
+    TResult Function(_AddDistrictId value)? addDistrictId,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +132,9 @@ class _$StartedImpl implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(AddressRequest addressRequest) editAddress,
+    required TResult Function(String provinceId) addProvinceId,
+    required TResult Function(String cityId) addCityId,
+    required TResult Function(String districtId) addDistrictId,
   }) {
     return started();
   }
@@ -123,6 +144,9 @@ class _$StartedImpl implements _Started {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(AddressRequest addressRequest)? editAddress,
+    TResult? Function(String provinceId)? addProvinceId,
+    TResult? Function(String cityId)? addCityId,
+    TResult? Function(String districtId)? addDistrictId,
   }) {
     return started?.call();
   }
@@ -132,6 +156,9 @@ class _$StartedImpl implements _Started {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(AddressRequest addressRequest)? editAddress,
+    TResult Function(String provinceId)? addProvinceId,
+    TResult Function(String cityId)? addCityId,
+    TResult Function(String districtId)? addDistrictId,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -145,6 +172,9 @@ class _$StartedImpl implements _Started {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_EditAddress value) editAddress,
+    required TResult Function(_AddProvinceId value) addProvinceId,
+    required TResult Function(_AddCityId value) addCityId,
+    required TResult Function(_AddDistrictId value) addDistrictId,
   }) {
     return started(this);
   }
@@ -154,6 +184,9 @@ class _$StartedImpl implements _Started {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_EditAddress value)? editAddress,
+    TResult? Function(_AddProvinceId value)? addProvinceId,
+    TResult? Function(_AddCityId value)? addCityId,
+    TResult? Function(_AddDistrictId value)? addDistrictId,
   }) {
     return started?.call(this);
   }
@@ -163,6 +196,9 @@ class _$StartedImpl implements _Started {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_EditAddress value)? editAddress,
+    TResult Function(_AddProvinceId value)? addProvinceId,
+    TResult Function(_AddCityId value)? addCityId,
+    TResult Function(_AddDistrictId value)? addDistrictId,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -243,6 +279,9 @@ class _$EditAddressImpl implements _EditAddress {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(AddressRequest addressRequest) editAddress,
+    required TResult Function(String provinceId) addProvinceId,
+    required TResult Function(String cityId) addCityId,
+    required TResult Function(String districtId) addDistrictId,
   }) {
     return editAddress(addressRequest);
   }
@@ -252,6 +291,9 @@ class _$EditAddressImpl implements _EditAddress {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(AddressRequest addressRequest)? editAddress,
+    TResult? Function(String provinceId)? addProvinceId,
+    TResult? Function(String cityId)? addCityId,
+    TResult? Function(String districtId)? addDistrictId,
   }) {
     return editAddress?.call(addressRequest);
   }
@@ -261,6 +303,9 @@ class _$EditAddressImpl implements _EditAddress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(AddressRequest addressRequest)? editAddress,
+    TResult Function(String provinceId)? addProvinceId,
+    TResult Function(String cityId)? addCityId,
+    TResult Function(String districtId)? addDistrictId,
     required TResult orElse(),
   }) {
     if (editAddress != null) {
@@ -274,6 +319,9 @@ class _$EditAddressImpl implements _EditAddress {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_EditAddress value) editAddress,
+    required TResult Function(_AddProvinceId value) addProvinceId,
+    required TResult Function(_AddCityId value) addCityId,
+    required TResult Function(_AddDistrictId value) addDistrictId,
   }) {
     return editAddress(this);
   }
@@ -283,6 +331,9 @@ class _$EditAddressImpl implements _EditAddress {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_EditAddress value)? editAddress,
+    TResult? Function(_AddProvinceId value)? addProvinceId,
+    TResult? Function(_AddCityId value)? addCityId,
+    TResult? Function(_AddDistrictId value)? addDistrictId,
   }) {
     return editAddress?.call(this);
   }
@@ -292,6 +343,9 @@ class _$EditAddressImpl implements _EditAddress {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_EditAddress value)? editAddress,
+    TResult Function(_AddProvinceId value)? addProvinceId,
+    TResult Function(_AddCityId value)? addCityId,
+    TResult Function(_AddDistrictId value)? addDistrictId,
     required TResult orElse(),
   }) {
     if (editAddress != null) {
@@ -312,12 +366,469 @@ abstract class _EditAddress implements EditAddressEvent {
 }
 
 /// @nodoc
+abstract class _$$AddProvinceIdImplCopyWith<$Res> {
+  factory _$$AddProvinceIdImplCopyWith(
+          _$AddProvinceIdImpl value, $Res Function(_$AddProvinceIdImpl) then) =
+      __$$AddProvinceIdImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String provinceId});
+}
+
+/// @nodoc
+class __$$AddProvinceIdImplCopyWithImpl<$Res>
+    extends _$EditAddressEventCopyWithImpl<$Res, _$AddProvinceIdImpl>
+    implements _$$AddProvinceIdImplCopyWith<$Res> {
+  __$$AddProvinceIdImplCopyWithImpl(
+      _$AddProvinceIdImpl _value, $Res Function(_$AddProvinceIdImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? provinceId = null,
+  }) {
+    return _then(_$AddProvinceIdImpl(
+      null == provinceId
+          ? _value.provinceId
+          : provinceId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AddProvinceIdImpl implements _AddProvinceId {
+  const _$AddProvinceIdImpl(this.provinceId);
+
+  @override
+  final String provinceId;
+
+  @override
+  String toString() {
+    return 'EditAddressEvent.addProvinceId(provinceId: $provinceId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AddProvinceIdImpl &&
+            (identical(other.provinceId, provinceId) ||
+                other.provinceId == provinceId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, provinceId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AddProvinceIdImplCopyWith<_$AddProvinceIdImpl> get copyWith =>
+      __$$AddProvinceIdImplCopyWithImpl<_$AddProvinceIdImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(AddressRequest addressRequest) editAddress,
+    required TResult Function(String provinceId) addProvinceId,
+    required TResult Function(String cityId) addCityId,
+    required TResult Function(String districtId) addDistrictId,
+  }) {
+    return addProvinceId(provinceId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(AddressRequest addressRequest)? editAddress,
+    TResult? Function(String provinceId)? addProvinceId,
+    TResult? Function(String cityId)? addCityId,
+    TResult? Function(String districtId)? addDistrictId,
+  }) {
+    return addProvinceId?.call(provinceId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(AddressRequest addressRequest)? editAddress,
+    TResult Function(String provinceId)? addProvinceId,
+    TResult Function(String cityId)? addCityId,
+    TResult Function(String districtId)? addDistrictId,
+    required TResult orElse(),
+  }) {
+    if (addProvinceId != null) {
+      return addProvinceId(provinceId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_EditAddress value) editAddress,
+    required TResult Function(_AddProvinceId value) addProvinceId,
+    required TResult Function(_AddCityId value) addCityId,
+    required TResult Function(_AddDistrictId value) addDistrictId,
+  }) {
+    return addProvinceId(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_EditAddress value)? editAddress,
+    TResult? Function(_AddProvinceId value)? addProvinceId,
+    TResult? Function(_AddCityId value)? addCityId,
+    TResult? Function(_AddDistrictId value)? addDistrictId,
+  }) {
+    return addProvinceId?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_EditAddress value)? editAddress,
+    TResult Function(_AddProvinceId value)? addProvinceId,
+    TResult Function(_AddCityId value)? addCityId,
+    TResult Function(_AddDistrictId value)? addDistrictId,
+    required TResult orElse(),
+  }) {
+    if (addProvinceId != null) {
+      return addProvinceId(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AddProvinceId implements EditAddressEvent {
+  const factory _AddProvinceId(final String provinceId) = _$AddProvinceIdImpl;
+
+  String get provinceId;
+  @JsonKey(ignore: true)
+  _$$AddProvinceIdImplCopyWith<_$AddProvinceIdImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$AddCityIdImplCopyWith<$Res> {
+  factory _$$AddCityIdImplCopyWith(
+          _$AddCityIdImpl value, $Res Function(_$AddCityIdImpl) then) =
+      __$$AddCityIdImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String cityId});
+}
+
+/// @nodoc
+class __$$AddCityIdImplCopyWithImpl<$Res>
+    extends _$EditAddressEventCopyWithImpl<$Res, _$AddCityIdImpl>
+    implements _$$AddCityIdImplCopyWith<$Res> {
+  __$$AddCityIdImplCopyWithImpl(
+      _$AddCityIdImpl _value, $Res Function(_$AddCityIdImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cityId = null,
+  }) {
+    return _then(_$AddCityIdImpl(
+      null == cityId
+          ? _value.cityId
+          : cityId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AddCityIdImpl implements _AddCityId {
+  const _$AddCityIdImpl(this.cityId);
+
+  @override
+  final String cityId;
+
+  @override
+  String toString() {
+    return 'EditAddressEvent.addCityId(cityId: $cityId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AddCityIdImpl &&
+            (identical(other.cityId, cityId) || other.cityId == cityId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, cityId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AddCityIdImplCopyWith<_$AddCityIdImpl> get copyWith =>
+      __$$AddCityIdImplCopyWithImpl<_$AddCityIdImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(AddressRequest addressRequest) editAddress,
+    required TResult Function(String provinceId) addProvinceId,
+    required TResult Function(String cityId) addCityId,
+    required TResult Function(String districtId) addDistrictId,
+  }) {
+    return addCityId(cityId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(AddressRequest addressRequest)? editAddress,
+    TResult? Function(String provinceId)? addProvinceId,
+    TResult? Function(String cityId)? addCityId,
+    TResult? Function(String districtId)? addDistrictId,
+  }) {
+    return addCityId?.call(cityId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(AddressRequest addressRequest)? editAddress,
+    TResult Function(String provinceId)? addProvinceId,
+    TResult Function(String cityId)? addCityId,
+    TResult Function(String districtId)? addDistrictId,
+    required TResult orElse(),
+  }) {
+    if (addCityId != null) {
+      return addCityId(cityId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_EditAddress value) editAddress,
+    required TResult Function(_AddProvinceId value) addProvinceId,
+    required TResult Function(_AddCityId value) addCityId,
+    required TResult Function(_AddDistrictId value) addDistrictId,
+  }) {
+    return addCityId(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_EditAddress value)? editAddress,
+    TResult? Function(_AddProvinceId value)? addProvinceId,
+    TResult? Function(_AddCityId value)? addCityId,
+    TResult? Function(_AddDistrictId value)? addDistrictId,
+  }) {
+    return addCityId?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_EditAddress value)? editAddress,
+    TResult Function(_AddProvinceId value)? addProvinceId,
+    TResult Function(_AddCityId value)? addCityId,
+    TResult Function(_AddDistrictId value)? addDistrictId,
+    required TResult orElse(),
+  }) {
+    if (addCityId != null) {
+      return addCityId(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AddCityId implements EditAddressEvent {
+  const factory _AddCityId(final String cityId) = _$AddCityIdImpl;
+
+  String get cityId;
+  @JsonKey(ignore: true)
+  _$$AddCityIdImplCopyWith<_$AddCityIdImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$AddDistrictIdImplCopyWith<$Res> {
+  factory _$$AddDistrictIdImplCopyWith(
+          _$AddDistrictIdImpl value, $Res Function(_$AddDistrictIdImpl) then) =
+      __$$AddDistrictIdImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String districtId});
+}
+
+/// @nodoc
+class __$$AddDistrictIdImplCopyWithImpl<$Res>
+    extends _$EditAddressEventCopyWithImpl<$Res, _$AddDistrictIdImpl>
+    implements _$$AddDistrictIdImplCopyWith<$Res> {
+  __$$AddDistrictIdImplCopyWithImpl(
+      _$AddDistrictIdImpl _value, $Res Function(_$AddDistrictIdImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? districtId = null,
+  }) {
+    return _then(_$AddDistrictIdImpl(
+      null == districtId
+          ? _value.districtId
+          : districtId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AddDistrictIdImpl implements _AddDistrictId {
+  const _$AddDistrictIdImpl(this.districtId);
+
+  @override
+  final String districtId;
+
+  @override
+  String toString() {
+    return 'EditAddressEvent.addDistrictId(districtId: $districtId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AddDistrictIdImpl &&
+            (identical(other.districtId, districtId) ||
+                other.districtId == districtId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, districtId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AddDistrictIdImplCopyWith<_$AddDistrictIdImpl> get copyWith =>
+      __$$AddDistrictIdImplCopyWithImpl<_$AddDistrictIdImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(AddressRequest addressRequest) editAddress,
+    required TResult Function(String provinceId) addProvinceId,
+    required TResult Function(String cityId) addCityId,
+    required TResult Function(String districtId) addDistrictId,
+  }) {
+    return addDistrictId(districtId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(AddressRequest addressRequest)? editAddress,
+    TResult? Function(String provinceId)? addProvinceId,
+    TResult? Function(String cityId)? addCityId,
+    TResult? Function(String districtId)? addDistrictId,
+  }) {
+    return addDistrictId?.call(districtId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(AddressRequest addressRequest)? editAddress,
+    TResult Function(String provinceId)? addProvinceId,
+    TResult Function(String cityId)? addCityId,
+    TResult Function(String districtId)? addDistrictId,
+    required TResult orElse(),
+  }) {
+    if (addDistrictId != null) {
+      return addDistrictId(districtId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_EditAddress value) editAddress,
+    required TResult Function(_AddProvinceId value) addProvinceId,
+    required TResult Function(_AddCityId value) addCityId,
+    required TResult Function(_AddDistrictId value) addDistrictId,
+  }) {
+    return addDistrictId(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_EditAddress value)? editAddress,
+    TResult? Function(_AddProvinceId value)? addProvinceId,
+    TResult? Function(_AddCityId value)? addCityId,
+    TResult? Function(_AddDistrictId value)? addDistrictId,
+  }) {
+    return addDistrictId?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_EditAddress value)? editAddress,
+    TResult Function(_AddProvinceId value)? addProvinceId,
+    TResult Function(_AddCityId value)? addCityId,
+    TResult Function(_AddDistrictId value)? addDistrictId,
+    required TResult orElse(),
+  }) {
+    if (addDistrictId != null) {
+      return addDistrictId(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AddDistrictId implements EditAddressEvent {
+  const factory _AddDistrictId(final String districtId) = _$AddDistrictIdImpl;
+
+  String get districtId;
+  @JsonKey(ignore: true)
+  _$$AddDistrictIdImplCopyWith<_$AddDistrictIdImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$EditAddressState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(
+            String provinceId, String cityId, String districtId)
+        loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -325,7 +836,8 @@ mixin _$EditAddressState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -333,7 +845,8 @@ mixin _$EditAddressState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -423,7 +936,9 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(
+            String provinceId, String cityId, String districtId)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -434,7 +949,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -445,7 +961,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -537,7 +1054,9 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(
+            String provinceId, String cityId, String districtId)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -548,7 +1067,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -559,7 +1079,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -616,6 +1137,8 @@ abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String provinceId, String cityId, String districtId});
 }
 
 /// @nodoc
@@ -625,36 +1148,80 @@ class __$$LoadedImplCopyWithImpl<$Res>
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? provinceId = null,
+    Object? cityId = null,
+    Object? districtId = null,
+  }) {
+    return _then(_$LoadedImpl(
+      null == provinceId
+          ? _value.provinceId
+          : provinceId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == cityId
+          ? _value.cityId
+          : cityId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == districtId
+          ? _value.districtId
+          : districtId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl();
+  const _$LoadedImpl(this.provinceId, this.cityId, this.districtId);
+
+  @override
+  final String provinceId;
+  @override
+  final String cityId;
+  @override
+  final String districtId;
 
   @override
   String toString() {
-    return 'EditAddressState.loaded()';
+    return 'EditAddressState.loaded(provinceId: $provinceId, cityId: $cityId, districtId: $districtId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            (identical(other.provinceId, provinceId) ||
+                other.provinceId == provinceId) &&
+            (identical(other.cityId, cityId) || other.cityId == cityId) &&
+            (identical(other.districtId, districtId) ||
+                other.districtId == districtId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, provinceId, cityId, districtId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(
+            String provinceId, String cityId, String districtId)
+        loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded();
+    return loaded(provinceId, cityId, districtId);
   }
 
   @override
@@ -662,10 +1229,11 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call();
+    return loaded?.call(provinceId, cityId, districtId);
   }
 
   @override
@@ -673,12 +1241,13 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(provinceId, cityId, districtId);
     }
     return orElse();
   }
@@ -722,7 +1291,15 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements EditAddressState {
-  const factory _Loaded() = _$LoadedImpl;
+  const factory _Loaded(final String provinceId, final String cityId,
+      final String districtId) = _$LoadedImpl;
+
+  String get provinceId;
+  String get cityId;
+  String get districtId;
+  @JsonKey(ignore: true)
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -791,7 +1368,9 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(
+            String provinceId, String cityId, String districtId)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -802,7 +1381,8 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -813,7 +1393,8 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String provinceId, String cityId, String districtId)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

@@ -59,7 +59,6 @@ class RajaongkirRemoteDatasource {
   // Fungsi getCost digunakan untuk mengambil data ongkos kirim dari server
   Future<Either<String, CostResponse>> getCost(
       String origin, String destination, int weight, String courier) async {
-    // List<String> courier = ['jne', 'pos', 'tiki'];
     final response = await http.post(
       Uri.parse('${Variables.rajaongkirUrl}/api/cost'),
       headers: {

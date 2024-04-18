@@ -59,4 +59,25 @@ class AuthRemoteDatasource {
       return const Left('Internal Server Error');
     }
   }
+
+  // update fcm_token
+  Future<Either<String, String>> updateFcmToken(String fcmToken) async {
+    final authData = await AuthLocalDatasource().getAuthData();
+    final response = await http.post(
+      Uri.parse('${Variables.baseUrl}/api/update-fcm-token'),
+      headers: {
+        'Authorization': 'Bearer ${authData?.accessToken}',
+        'Accept': 'application/json',
+      },
+      body: {
+        'fcm_token': fcmToken,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return Right(response.body);
+    } else {
+      return const Left('Internal Server Error');
+    }
+  }
 }

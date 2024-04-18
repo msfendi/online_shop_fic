@@ -12,6 +12,7 @@ import '../../../data/models/responses/city_response_model.dart';
 import '../../../data/models/responses/province_response_model.dart';
 import '../../../data/models/responses/subdistrict_response_model.dart';
 import '../bloc/city/city_bloc.dart';
+import '../bloc/edit_address/edit_address_bloc.dart';
 import '../bloc/province/province_bloc.dart';
 import '../bloc/subdistrict/subdistrict_bloc.dart';
 
@@ -27,6 +28,15 @@ class _EditAddressPageState extends State<EditAddressPage> {
   @override
   void initState() {
     // TODO: implement initState
+    context
+        .read<EditAddressBloc>()
+        .add(EditAddressEvent.addProvinceId(widget.data.provId!));
+    context
+        .read<EditAddressBloc>()
+        .add(EditAddressEvent.addCityId(widget.data.cityId!));
+    context
+        .read<EditAddressBloc>()
+        .add(EditAddressEvent.addDistrictId(widget.data.districtId!));
     context.read<ProvinceBloc>().add(const ProvinceEvent.getProvince());
     super.initState();
   }
@@ -88,54 +98,59 @@ class _EditAddressPageState extends State<EditAddressPage> {
             label: 'Alamat jalan',
           ),
           const SpaceHeight(24.0),
-          BlocListener<ProvinceBloc, ProvinceState>(
-            listener: (context, state) {
-              state.maybeWhen(
-                orElse: () {},
-                loaded: (provinces) {
-                  print(selectedProvince);
-                  context
-                      .read<CityBloc>()
-                      .add(CityEvent.getCity(selectedProvince.provinceId!));
-                },
-              );
-            },
-            child: BlocBuilder<ProvinceBloc, ProvinceState>(
-              builder: (context, state) {
-                return state.maybeWhen(
-                    orElse: () => Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        enabled: true,
-                        child: CustomDropdown(
-                            value: selectedProvince,
-                            items: const [],
-                            label: 'Provinsi')),
-                    loaded: (provinces) {
-                      // select the province based on widget.data.provId
-                      selectedProvince = provinces.firstWhere((element) =>
-                          element.provinceId == selectedProvince.provinceId);
-                      context
-                          .read<CityBloc>()
-                          .add(CityEvent.getCity(selectedProvince.provinceId!));
-                      return CustomDropdown<Province>(
+          BlocBuilder<ProvinceBloc, ProvinceState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                  orElse: () => Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      enabled: true,
+                      child: CustomDropdown(
                           value: selectedProvince,
-                          items: provinces,
-                          label: 'Provinsi',
-                          onChanged: (value) {
-                            setState(() {
-                              selectedProvince = value!;
+                          items: const [],
+                          label: 'Provinsi')),
+                  loaded: (provinces) {
+                    // select the province based on widget.data.provId
+                    // context
+                    //     .read<CityBloc>()
+                    //     .add(CityEvent.getCity(widget.data.provId!));
+                    selectedProvince = provinces.firstWhere((element) =>
+                        element.provinceId == selectedProvince.provinceId);
+                    return BlocBuilder<EditAddressBloc, EditAddressState>(
+                      builder: (context, state) {
+                        state.maybeWhen(
+                          orElse: () {},
+                          loaded: (provinceId, _, __) {
+                            selectedProvince.provinceId = provinceId;
+                            context.read<CityBloc>().add(CityEvent.getCity(
+                                  provinceId,
+                                ));
+                          },
+                        );
+                        return CustomDropdown<Province>(
+                            value: selectedProvince,
+                            items: provinces,
+                            label: 'Provinsi',
+                            onChanged: (value) {
+                              context.read<EditAddressBloc>().add(
+                                  EditAddressEvent.addProvinceId(
+                                      value!.provinceId!));
                             });
-                            print(value);
-                          });
-                    });
-              },
-            ),
+                      },
+                    );
+                  });
+            },
           ),
           const SpaceHeight(24.0),
           BlocBuilder<CityBloc, CityState>(
             builder: (context, state) {
               return state.maybeWhen(
+                loading: (() {
+                  context
+                      .read<CityBloc>()
+                      .add(CityEvent.getCity(selectedProvince.provinceId!));
+                  return const Center(child: CircularProgressIndicator());
+                }),
                 orElse: () => Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
@@ -143,23 +158,34 @@ class _EditAddressPageState extends State<EditAddressPage> {
                     child: CustomDropdown(
                         value: selectedCity, items: const [], label: 'Kota')),
                 loaded: (cities) {
-                  print(selectedProvince);
-                  if (selectedProvince.provinceId != widget.data.provId) {
+                  if (selectedCity.cityId != widget.data.cityId) {
                     selectedCity = cities.first;
                   } else {
                     selectedCity = cities.firstWhere(
                         (element) => element.cityId == selectedCity.cityId);
                   }
-                  context.read<SubdistrictBloc>().add(
-                      SubdistrictEvent.getSubdistrict(selectedCity.cityId!));
-                  return CustomDropdown<City>(
-                    value: selectedCity,
-                    items: cities,
-                    label: 'Kota',
-                    onChanged: (value) {
-                      setState(() {
-                        selectedCity = value!;
-                      });
+                  return BlocBuilder<EditAddressBloc, EditAddressState>(
+                    builder: (context, state) {
+                      state.maybeWhen(
+                        orElse: () {},
+                        loaded: (_, cityId, __) {
+                          selectedCity.cityId = cityId;
+                          context.read<SubdistrictBloc>().add(
+                              SubdistrictEvent.getSubdistrict(
+                                  selectedCity.cityId!));
+                        },
+                      );
+                      return CustomDropdown<City>(
+                        value: selectedCity,
+                        items: cities,
+                        label: 'Kota',
+                        onChanged: (value) {
+                          context
+                              .read<EditAddressBloc>()
+                              .add(EditAddressEvent.addCityId(value!.cityId!));
+                          selectedSubdistrict.subdistrictId = '';
+                        },
+                      );
                     },
                   );
                 },
@@ -179,21 +205,27 @@ class _EditAddressPageState extends State<EditAddressPage> {
                         items: const [],
                         label: 'Kecamatan')),
                 loaded: (subdistricts) {
-                  if (selectedCity.cityId != widget.data.cityId) {
-                    selectedSubdistrict = subdistricts.first;
-                  } else {
-                    selectedSubdistrict = subdistricts.firstWhere((element) =>
-                        element.subdistrictId ==
-                        selectedSubdistrict.subdistrictId);
-                  }
-                  return CustomDropdown<Subdistrict>(
-                    value: selectedSubdistrict,
-                    items: subdistricts,
-                    label: 'Kecamatan',
-                    onChanged: (value) {
-                      setState(() {
-                        selectedSubdistrict = value!;
-                      });
+                  selectedSubdistrict = subdistricts.firstWhere((element) =>
+                      element.subdistrictId ==
+                      selectedSubdistrict.subdistrictId);
+                  return BlocBuilder<EditAddressBloc, EditAddressState>(
+                    builder: (context, state) {
+                      state.maybeWhen(
+                        orElse: () {},
+                        loaded: (_, __, districtId) {
+                          selectedSubdistrict.subdistrictId = districtId;
+                        },
+                      );
+                      return CustomDropdown<Subdistrict>(
+                        value: selectedSubdistrict,
+                        items: subdistricts,
+                        label: 'Kecamatan',
+                        onChanged: (value) {
+                          context.read<EditAddressBloc>().add(
+                              EditAddressEvent.addDistrictId(
+                                  value!.subdistrictId!));
+                        },
+                      );
                     },
                   );
                 },

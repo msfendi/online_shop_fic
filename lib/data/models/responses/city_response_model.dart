@@ -81,8 +81,8 @@ class Query {
 }
 
 class City {
-  final String? cityId;
-  final String? provinceId;
+  String? cityId;
+  String? provinceId;
   final String? province;
   final String? type;
   final String? cityName;

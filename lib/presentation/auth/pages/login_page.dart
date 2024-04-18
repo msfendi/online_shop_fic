@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:online_shop_fic/data/datasource/auth_local_datasource.dart';
+import 'package:online_shop_fic/data/datasource/firebase_messaging_remote_datasource.dart';
 
 import '../../../core/components/buttons.dart';
 import '../../../core/components/spaces.dart';
@@ -88,8 +89,10 @@ class _LoginPageState extends State<LoginPage> {
             listener: (context, state) {
               state.maybeWhen(
                 orElse: () {},
-                loaded: (data) {
+                loaded: (data) async {
                   AuthLocalDatasource().saveAuthData(data);
+                  await FirebaseMessagingRemoteDatasource()
+                      .initializeFirebaseMessaging();
                   context.goNamed(
                     RouteConstants.root,
                     pathParameters: PathParameters().toMap(),

@@ -6,6 +6,8 @@ import 'package:online_shop_fic/core/router/app_router.dart';
 import 'package:online_shop_fic/data/datasource/address_remote_datasource.dart';
 import 'package:online_shop_fic/data/datasource/auth_remote_datasource.dart';
 import 'package:online_shop_fic/data/datasource/category_remote_datasource.dart';
+import 'package:online_shop_fic/data/datasource/firebase_messaging_remote_datasource.dart';
+import 'package:online_shop_fic/data/datasource/order_remote_datasource.dart';
 import 'package:online_shop_fic/data/datasource/product_remote_datasource.dart';
 import 'package:online_shop_fic/data/datasource/rajaongkir_remote_datasource.dart';
 import 'package:online_shop_fic/presentation/address/bloc/add_address/add_address_bloc.dart';
@@ -21,12 +23,22 @@ import 'package:online_shop_fic/presentation/home/bloc/category/category_bloc.da
 import 'package:online_shop_fic/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:online_shop_fic/presentation/home/bloc/new_arrival/new_arrival_bloc.dart';
 import 'package:online_shop_fic/presentation/home/bloc/top_rated/top_rated_bloc.dart';
+import 'package:online_shop_fic/presentation/order/bloc/check_status/check_status_bloc.dart';
 import 'package:online_shop_fic/presentation/order/bloc/cost/cost_bloc.dart';
+import 'package:online_shop_fic/presentation/order/bloc/order/order_bloc.dart';
 
 import 'presentation/address/bloc/address/address_bloc.dart';
 import 'presentation/home/bloc/all_product/all_product_bloc.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessagingRemoteDatasource().initializeFirebaseMessaging();
   runApp(const MyApp());
 }
 
@@ -87,6 +99,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CostBloc(RajaongkirRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => OrderBloc(OrderRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => CheckStatusBloc(OrderRemoteDatasource()),
         ),
       ],
       child: MaterialApp.router(

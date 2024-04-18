@@ -79,10 +79,10 @@ class Query {
 }
 
 class Subdistrict {
-  final String? subdistrictId;
-  final String? provinceId;
+  String? subdistrictId;
+  String? provinceId;
   final String? province;
-  final String? cityId;
+  String? cityId;
   final String? city;
   final String? type;
   final String? subdistrictName;

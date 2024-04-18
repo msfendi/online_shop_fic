@@ -114,7 +114,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       emit(_Loaded(
           currentState.productCheckout,
           currentState.addressId,
-          currentState.paymentMethod,
+          'bank_transfer',
           event.paymentVaName,
           currentState.shippingService,
           currentState.shippingCost));

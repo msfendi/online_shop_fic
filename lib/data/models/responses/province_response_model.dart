@@ -61,7 +61,7 @@ class Rajaongkir {
 }
 
 class Province {
-  final String? provinceId;
+  String? provinceId;
   final String? province;
 
   Province({

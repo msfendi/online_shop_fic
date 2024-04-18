@@ -49,6 +49,10 @@ class RouteConstants {
   static const String paymentDetail = 'payment_detail';
   static const String paymentDetailPath = 'payment_detail';
 
+  /// route for page [PaymentDetailPage]
+  static const String paymentWaiting = 'payment_waiting';
+  static const String paymentWaitingPath = 'payment_waiting';
+
   /// route for page [TrackingOrderPage]
   static const String trackingOrder = 'tracking_order';
   static const String trackingOrderPath = 'tracking_order';

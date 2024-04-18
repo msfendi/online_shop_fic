@@ -209,16 +209,25 @@ class _AddressPageState extends State<AddressPage> {
               ],
             ),
             const SpaceHeight(12.0),
-            Button.filled(
-              onPressed: () {
-                context.goNamed(
-                  RouteConstants.orderDetail,
-                  pathParameters: PathParameters(
-                    rootTab: RootTab.order,
-                  ).toMap(),
+            BlocBuilder<CheckoutBloc, CheckoutState>(
+              builder: (context, state) {
+                final selectedAddress = state.maybeWhen(
+                  orElse: () {},
+                  loaded: (_, addressId, __, ___, ____, _____) => addressId,
+                );
+                return Button.filled(
+                  disabled: selectedAddress == 0,
+                  onPressed: () {
+                    context.goNamed(
+                      RouteConstants.orderDetail,
+                      pathParameters: PathParameters(
+                        rootTab: RootTab.order,
+                      ).toMap(),
+                    );
+                  },
+                  label: 'Lanjutkan',
                 );
               },
-              label: 'Lanjutkan',
             ),
           ],
         ),
