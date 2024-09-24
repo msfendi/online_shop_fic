@@ -9,11 +9,12 @@ import 'package:online_shop_fic/data/models/responses/subdistrict_response_model
 class RajaongkirRemoteDatasource {
   // Fungsi getProvinces digunakan untuk mengambil data provinsi dari server
   Future<Either<String, ProvinceResponse>> getProvinces() async {
-    final response = await http
-        .get(Uri.parse('${Variables.rajaongkirUrl}/api/province'), headers: {
-      'Accept': 'application/json',
-      'key': Variables.rajaongkirApiKey,
-    });
+    final response = await http.get(
+        Uri.parse('${Variables.rajaongkirUrl}/starter/province'),
+        headers: {
+          'Accept': 'application/json',
+          'key': Variables.rajaongkirApiKey,
+        });
 
     // jika status code response adalah 200, maka response body akan diubah menjadi object ProvinceResponse
     if (response.statusCode == 200) {
@@ -26,10 +27,12 @@ class RajaongkirRemoteDatasource {
   // Fungsi getCities digunakan untuk mengambil data kota dari server
   Future<Either<String, CityResponse>> getCities(String provinceId) async {
     final response = await http.get(
-        Uri.parse('${Variables.rajaongkirUrl}/api/city?province=$provinceId'),
+        Uri.parse(
+            '${Variables.rajaongkirUrl}/starter/city?province=$provinceId'),
         headers: {
           'key': Variables.rajaongkirApiKey,
         });
+    print(response.body);
 
     // jika status code response adalah 200, maka response body akan diubah menjadi object CityResponse
     if (response.statusCode == 200) {
@@ -43,7 +46,8 @@ class RajaongkirRemoteDatasource {
   Future<Either<String, SubdistrictResponse>> getSubdistricts(
       String cityId) async {
     final response = await http.get(
-        Uri.parse('${Variables.rajaongkirUrl}/api/subdistrict?city=$cityId'),
+        Uri.parse(
+            '${Variables.rajaongkirUrl}/starter/subdistrict?city=$cityId'),
         headers: {
           'key': Variables.rajaongkirApiKey,
         });

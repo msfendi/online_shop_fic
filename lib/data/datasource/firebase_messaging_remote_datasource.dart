@@ -44,7 +44,7 @@ class FirebaseMessagingRemoteDatasource {
     // simpan token
     final fcmToken = await _firebaseMessaging.getToken();
 
-    // if user login, update fcm token
+    // jika user melakukan login pada local, maka fcm token akan terupdate
     if (await AuthLocalDatasource().isAuth()) {
       AuthRemoteDatasource().updateFcmToken(fcmToken!);
     }

@@ -25,7 +25,9 @@ import 'package:online_shop_fic/presentation/home/bloc/new_arrival/new_arrival_b
 import 'package:online_shop_fic/presentation/home/bloc/top_rated/top_rated_bloc.dart';
 import 'package:online_shop_fic/presentation/order/bloc/check_status/check_status_bloc.dart';
 import 'package:online_shop_fic/presentation/order/bloc/cost/cost_bloc.dart';
+import 'package:online_shop_fic/presentation/order/bloc/history_order/history_order_bloc.dart';
 import 'package:online_shop_fic/presentation/order/bloc/order/order_bloc.dart';
+import 'package:online_shop_fic/presentation/order/bloc/order_detail/order_detail_bloc.dart';
 
 import 'presentation/address/bloc/address/address_bloc.dart';
 import 'presentation/home/bloc/all_product/all_product_bloc.dart';
@@ -35,10 +37,10 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FirebaseMessagingRemoteDatasource().initializeFirebaseMessaging();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  // FirebaseMessagingRemoteDatasource().initializeFirebaseMessaging();
   runApp(const MyApp());
 }
 
@@ -105,6 +107,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CheckStatusBloc(OrderRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => HistoryOrderBloc(OrderRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => OrderDetailBloc(OrderRemoteDatasource()),
         ),
       ],
       child: MaterialApp.router(

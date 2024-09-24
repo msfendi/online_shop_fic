@@ -45,6 +45,10 @@ class RouteConstants {
   static const String orderDetail = 'order_detail';
   static const String orderDetailPath = 'order_detail';
 
+  /// route for page [HistoryOrderPage]
+  static const String historyOrder = 'history_order';
+  static const String historyOrderPath = 'history_order';
+
   /// route for page [PaymentDetailPage]
   static const String paymentDetail = 'payment_detail';
   static const String paymentDetailPath = 'payment_detail';

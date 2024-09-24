@@ -56,13 +56,13 @@ class _EditAddressPageState extends State<EditAddressPage> {
       province: '',
     );
 
-    City selectedCity = City(
+    City? selectedCity = City(
       cityId: widget.data.cityId,
       provinceId: widget.data.provId,
       province: '',
     );
 
-    Subdistrict selectedSubdistrict = Subdistrict(
+    Subdistrict? selectedSubdistrict = Subdistrict(
       subdistrictId: widget.data.districtId,
       provinceId: widget.data.provId,
       province: '',
@@ -135,6 +135,8 @@ class _EditAddressPageState extends State<EditAddressPage> {
                               context.read<EditAddressBloc>().add(
                                   EditAddressEvent.addProvinceId(
                                       value!.provinceId!));
+                              selectedCity = null;
+                              selectedSubdistrict = null;
                             });
                       },
                     );
@@ -158,32 +160,55 @@ class _EditAddressPageState extends State<EditAddressPage> {
                     child: CustomDropdown(
                         value: selectedCity, items: const [], label: 'Kota')),
                 loaded: (cities) {
-                  if (selectedCity.cityId != widget.data.cityId) {
+                  if (selectedCity == null) {
                     selectedCity = cities.first;
                   } else {
+                    // selectedCity 1
+                    // t isinya [1]
+
+                    // t [] => cities
+
+                    // firstWhere -> not found will throw error
+                    // where -> not found will []
+
                     selectedCity = cities.firstWhere(
-                        (element) => element.cityId == selectedCity.cityId);
+                        (element) => element.cityId == selectedCity?.cityId,
+                        orElse: () => cities.first);
+
+                    // Iterable<City> filterCities = cities.where(
+                    //     (element) => element.cityId == selectedCity?.cityId);
+                    // if (filterCities.isEmpty) {
+                    //   selectedCity = cities.first;
+                    // } else {
+                    //   selectedCity = filterCities.first;
+                    // }
                   }
                   return BlocBuilder<EditAddressBloc, EditAddressState>(
                     builder: (context, state) {
                       state.maybeWhen(
                         orElse: () {},
                         loaded: (_, cityId, __) {
-                          selectedCity.cityId = cityId;
-                          context.read<SubdistrictBloc>().add(
-                              SubdistrictEvent.getSubdistrict(
-                                  selectedCity.cityId!));
+                          selectedCity?.cityId = cityId;
+                          if (selectedCity != null) {
+                            context.read<SubdistrictBloc>().add(
+                                SubdistrictEvent.getSubdistrict(
+                                    selectedCity!.cityId!));
+                          }
                         },
                       );
+
+                      if (selectedCity == null) {
+                        return const CircularProgressIndicator();
+                      }
                       return CustomDropdown<City>(
-                        value: selectedCity,
+                        value: selectedCity!,
                         items: cities,
                         label: 'Kota',
                         onChanged: (value) {
                           context
                               .read<EditAddressBloc>()
                               .add(EditAddressEvent.addCityId(value!.cityId!));
-                          selectedSubdistrict.subdistrictId = '';
+                          selectedSubdistrict?.subdistrictId = '';
                         },
                       );
                     },
@@ -207,17 +232,20 @@ class _EditAddressPageState extends State<EditAddressPage> {
                 loaded: (subdistricts) {
                   selectedSubdistrict = subdistricts.firstWhere((element) =>
                       element.subdistrictId ==
-                      selectedSubdistrict.subdistrictId);
+                      selectedSubdistrict?.subdistrictId);
                   return BlocBuilder<EditAddressBloc, EditAddressState>(
                     builder: (context, state) {
                       state.maybeWhen(
                         orElse: () {},
                         loaded: (_, __, districtId) {
-                          selectedSubdistrict.subdistrictId = districtId;
+                          selectedSubdistrict?.subdistrictId = districtId;
                         },
                       );
+                      if (selectedSubdistrict == null) {
+                        return const CircularProgressIndicator();
+                      }
                       return CustomDropdown<Subdistrict>(
-                        value: selectedSubdistrict,
+                        value: selectedSubdistrict!,
                         items: subdistricts,
                         label: 'Kecamatan',
                         onChanged: (value) {

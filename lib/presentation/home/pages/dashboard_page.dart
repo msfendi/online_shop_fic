@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop_fic/core/assets/assets.gen.dart';
 import 'package:online_shop_fic/core/constants/colors.dart';
+import 'package:online_shop_fic/presentation/account/pages/account_page.dart';
 import 'package:online_shop_fic/presentation/home/pages/home_page.dart';
 import 'package:online_shop_fic/presentation/profile/pages/profil_page.dart';
 
@@ -18,21 +19,12 @@ class _DashboardPageState extends State<DashboardPage> {
   late int _selectedIndex;
   final List<Widget> _pages = [
     const HomePage(),
-    // const SearchPage(),
-    // const Center(
-    //   child: Text('This Page 1'),
-    // ),
     const Center(
       child: Text('This Page 2'),
     ),
-    // const Center(
-    //   child: Text('This Page 3'),
-    // ),
     const CartPage(),
-    const ProfilPage()
-    // const Center(
-    //   child: Text('This Page 4 '),
-    // ),
+    const AccountPage()
+    // const ProfilPage()
   ];
 
   void _onItemTapped(int index) {

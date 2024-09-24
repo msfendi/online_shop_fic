@@ -41,14 +41,14 @@ class CartTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                    child: Image.network(
-                      data.product.image!,
-                      width: 68.0,
-                      height: 68.0,
-                    ),
-                  ),
+                  // ClipRRect(
+                  //   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  //   child: Image.network(
+                  //     data.product.image!,
+                  //     width: 68.0,
+                  //     height: 68.0,
+                  //   ),
+                  // ),
                   const SpaceWidth(14.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

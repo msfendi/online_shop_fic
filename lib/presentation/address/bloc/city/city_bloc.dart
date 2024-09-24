@@ -20,7 +20,7 @@ class CityBloc extends Bloc<CityEvent, CityState> {
 
       result.fold(
         (l) => emit(_Error(l)),
-        (r) => emit(_Loaded(r.rajaongkir!.results ?? [])),
+        (r) => emit(_Loaded(r.rajaongkir?.results ?? [])),
       );
     });
   }
